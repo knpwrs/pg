@@ -46,8 +46,8 @@ def get_template(engine, file)
 		Tilt::ERBTemplate.new(file)
 	when :str
 		Tilt::StringTemplate.new(file)
-	when :erb
-		Tilt::ERBTemplate.new(file)
+	when :erubis
+		Tilt::ErubisTemplate.new(file)
 	when :haml
 		Tilt::HamlTemplate.new(file)
 	when :sass
