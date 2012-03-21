@@ -1,4 +1,4 @@
-# pg
+# pg - project generator
 
 ## About
 
