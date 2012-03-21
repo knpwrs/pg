@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 	s.summary = "A project generation script. Projects are generated using templates stored in the user's home directory."
 	s.authors = ["Kenneth Powers"]
 	s.email = ["mail@kenpowers.net"]
-	s.files = ["lib/pg.rb", "bin/pg"]
+	s.files = ["lib/pg.rb", "bin/pg", "bin/.pg/sample/.dotfile", "bin/.pg/sample/.pgconfig.rb", "bin/.pg/CHANGELOG.txt", "bin/.pg/index.html"]
 	s.homepage = "http://kenpowers.net"
 	s.executables << "pg"
 end
