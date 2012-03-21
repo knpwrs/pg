@@ -32,9 +32,10 @@ def run_filters(filter_files, origin, target)
 	end
 end
 
-def run_filter(engine, file, target)
-	template = get_template(engine, file)
+def run_filter(engine, source, target)
+	template = get_template(engine, source)
 	File.open target, "w" do |file|
+		puts "#{engine}: #{source} to #{target}"
 		file.write template.render(@template_variables)
 	end
 end

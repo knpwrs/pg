@@ -51,13 +51,13 @@ FileUtils.cp_r @template_path, target
 end
 
 # delete the files to be filtered
-@filter_files.each do |engine, files|
-	files.each do |file|
-		temp = file.gsub(@template_path, target)
-		puts "Remove #{temp}"
-		FileUtils.remove(temp)
-	end
-end
+#@filter_files.each do |engine, files|
+#	files.each do |file|
+#		temp = file.gsub(@template_path, target)
+#		puts "Remove #{temp}"
+#		FileUtils.remove(temp)
+#	end
+#end
 
 # run the filters
 run_filters @filter_files, @template_path, target
