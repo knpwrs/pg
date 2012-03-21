@@ -11,7 +11,7 @@ def prompt(key, question = "#{key.to_s}:")
 end
 
 def filter(engine, glob)
-	files = Dir.glob(File.join @template_path, glob)
+	files = Dir.glob(File.join(@template_path, glob), File::FNM_DOTMATCH)
 	files.each do |file|
 		@filter_files[engine] << file
 	end
