@@ -1,3 +1,37 @@
 #!/usr/bin/env ruby
 bin_dir = File.dirname(__FILE__)
 require File.join(bin_dir, "..", "lib", "pg.rb")
+require "fileutils"
+
+# Set up template folder
+templates_path = File.join(Dir.home, ".pg")
+FileUtils.cp_r(File.join(bin_dir, ".pg"), templates_path) unless File.directory? templates_path
+
+# Initialize
+@template_path = ARGV[0]
+@template_path = ask "Which project template would you like to use?" if @template_path.nil?
+@template_path = File.join(templates_path, @template_path)
+target = ARGV[1]
+target = ask "Where would you like to build the project?" if target.nil?
+target = File.join(Dir::pwd, target)
+
+# And we're off!
+puts "Initializing template \"#{@template_path}\" in directory \"#{target}"
+
+# Get files in directory
+@template_files = Dir.glob((File.join @template_path, "*"), File::FNM_DOTMATCH)
+
+# Execute configuration script
+config_script = Dir.glob(File.join(@template_path, ".pgconfig.rb"), File::FNM_CASEFOLD).first
+@template_variables = Context.new
+@ignore_files = [File.join(@template_path, "."), File.join(@template_path, "..")]
+@ignore_files << config_script if config_script
+@filter_files = {:erb => []}
+require config_script if config_script
+
+# Subtract all files to ignore or filter
+@template_files -= @ignore_files
+@filter_files.each do |engine, files|
+	@filter_files[engine] -= @ignore_files
+	@template_files -= files
+end
