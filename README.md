@@ -4,6 +4,13 @@
 
 `pg` is a tool to generate projects based off of templates.
 
+## Installation
+
+Make sure you have the latest version of Ruby and RubyGems installed (tested and working on Ruby 1.9.3 and RubyGems 1.8.19) and execute the following command:
+
+    :::text
+    gem install project-generator
+
 ## Usage
 
 The first time you run `pg` it will create a new directory in your home directory called `.pg`. This is where project templates are stored. `pg` also places a sample template in the `.pg` directory. Each template should be in its own folder which contains all files relating to that template as well as a `.pgconfig.rb` file. Try running `pg sample test`. That will create a folder called `test` initialized with the contents of the template `sample`. The sample `.pgconfig.rb` file contains the following:

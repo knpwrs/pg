@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-	s.name = "pg"
+	s.name = "project-generator"
 	s.version = "0.1.0a"
 	s.date = "2012-03-20"
 	s.description = "A project generation script."
