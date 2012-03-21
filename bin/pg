@@ -24,14 +24,43 @@ puts "Initializing template \"#{@template_path}\" in directory \"#{target}"
 # Execute configuration script
 config_script = Dir.glob(File.join(@template_path, ".pgconfig.rb"), File::FNM_CASEFOLD).first
 @template_variables = Context.new
-@ignore_files = [File.join(@template_path, "."), File.join(@template_path, "..")]
+@system_files = [File.join(@template_path, "."), File.join(@template_path, "..")]
+@ignore_files = [] + @system_files;
 @ignore_files << config_script if config_script
 @filter_files = {:erb => []}
 require config_script if config_script
 
-# Subtract all files to ignore or filter
-@template_files -= @ignore_files
+# Subtract all files to ignore from the files to filter
 @filter_files.each do |engine, files|
 	@filter_files[engine] -= @ignore_files
-	@template_files -= files
 end
+
+# copy all files
+puts "Copying files"
+FileUtils.cp_r @template_path, target
+
+# fix ignored files
+@ignore_files -= @system_files
+
+# delete the ignored files
+@ignore_files.each do |file|
+	temp = file.gsub(@template_path, target)
+	puts "Remove #{temp}"
+	FileUtils.remove(temp) if File.file? temp
+	FileUtils.remove_dir(temp) if File.directory? temp
+end
+
+# delete the files to be filtered
+@filter_files.each do |engine, files|
+	files.each do |file|
+		temp = file.gsub(@template_path, target)
+		puts "Remove #{temp}"
+		FileUtils.remove(temp)
+	end
+end
+
+# run the filters
+run_filters @filter_files, @template_path, target
+
+# we're done
+puts "Done!"
